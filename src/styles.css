@@ -1,1 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    background-color: rgba(233, 233, 233, 0.863);
+    font-family: Helvetica;
+}
+
+input{
+    background-color:rgba(240, 240, 240, 0.863);
+    margin-top:10px;
+    width:80%;
+    border: none;
+    padding: 1%;
+    border-radius: 15px;
+    transition: 0.3s;
+    text-align: center;
+}
+
+
+
+input:hover{
+    background-color:rgba(224, 224, 224, 0.863);
+    transition: 0.3s;
+}
+
+.submit-button{
+    background-color: rgb(92, 221, 193);
+}
+
+.submit-button:hover{
+    background-color: rgb(80, 194, 169);
+}
+
+.visual-box{
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.295);
+    padding: 20px;
+    
+    width: 30%;
+    text-align: center;
+}
+
+.appColor{
+    color: rgb(92, 221, 193);
+}
+
+.main-page{
+    margin-top: auto;
+    margin-bottom: auto;
+}
