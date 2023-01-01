@@ -1,0 +1,31 @@
+<nav class="navbar">
+    <a routerLink="subject-view" 
+        routerLinkActive="activebutton"
+        ariaCurrentWhenActive="page">
+        Matières
+    </a>
+    <a routerLink="class-view" 
+        routerLinkActive="activebutton"
+        ariaCurrentWhenActive="page">
+        Spécialités
+    </a>
+        <a routerLink="rooms-view" 
+        routerLinkActive="activebutton"
+        ariaCurrentWhenActive="page">
+        Salles
+    </a>
+        <a routerLink="students-view" 
+        routerLinkActive="activebutton"
+        ariaCurrentWhenActive="page">
+        Eleves
+    </a>
+        <a routerLink="professors-view" 
+        routerLinkActive="activebutton"
+        ariaCurrentWhenActive="page">
+        Personnel
+    </a>
+</nav>
+
+<div class="container">
+    <router-outlet ></router-outlet>
+</div>
