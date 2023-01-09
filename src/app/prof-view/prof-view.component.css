@@ -1,0 +1,31 @@
+.navbar{
+    margin: auto;
+    display:inline-flex;
+    background-color: rgb(92, 221, 193);
+    /*padding: 10px 0px;*/
+    border-radius: 15px 15px 0px 0px;
+    width: 100%;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.295);
+    overflow: hidden;
+}
+
+a{
+    margin: auto;
+    padding: 15px 15px;
+    transition:0.3s;
+    color:black;
+    font-weight: bold;
+    
+}
+
+a:hover{
+    transition:0.3s;
+    
+    background-color: rgb(80, 194, 169);
+}
+
+.activebutton{
+    transition:0.3s;
+    
+    background-color: rgb(80, 194, 169);
+}

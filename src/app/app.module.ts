@@ -16,7 +16,17 @@ import { ClassViewComponent } from './gestion-view/views/class-view/class-view.c
 import { RoomsViewComponent } from './gestion-view/views/rooms-view/rooms-view.component';
 import { ProfessorsViewComponent } from './gestion-view/views/professors-view/professors-view.component';
 import { StudentsViewComponent } from './gestion-view/views/students-view/students-view.component';
-
+import { ResponsableViewComponent } from './responsable-view/responsable-view.component';
+import { ProfAdminViewComponent } from './prof-admin-view/prof-admin-view.component';
+import { RespoPlanningCreatorComponent } from './respo-planning-creator/respo-planning-creator.component';
+import { MyWatchViewComponent } from './prof-admin-view/views/my-watch-view/my-watch-view.component';
+import { MyAbsenceViewComponent } from './prof-admin-view/views/my-absence-view/my-absence-view.component';
+import { AbsenceAdderViewComponent } from './prof-admin-view/views/absence-adder-view/absence-adder-view.component';
+import { AuthGuard } from './helpers/auth.guard';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './helpers/token.interceptor';
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
+import { RedirectionComponent } from './redirection/redirection.component';
 
 @NgModule({
   declarations: [
@@ -32,38 +42,82 @@ import { StudentsViewComponent } from './gestion-view/views/students-view/studen
     ClassViewComponent,
     RoomsViewComponent,
     ProfessorsViewComponent,
-    StudentsViewComponent
+    StudentsViewComponent,
+    ResponsableViewComponent,
+    ProfAdminViewComponent,
+    RespoPlanningCreatorComponent,
+    MyWatchViewComponent,
+    MyAbsenceViewComponent,
+    AbsenceAdderViewComponent,
+    RedirectionComponent,
+    
   ],
   imports: [
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot([
+      
+
+      //Vues principales (redirection selon la nature de l'user)
       {
-        path : 'gestion-view',
-        component:GestionViewComponent,
-        children :[
-          {path : 'subject-view', component:SubjectViewComponent},
-          {path : 'rooms-view', component:RoomsViewComponent},
-          {path : 'professors-view', component:ProfessorsViewComponent},
-          {path : 'students-view', component:StudentsViewComponent},
-          {path : 'class-view', component:ClassViewComponent}
+        path:'prof-view',
+        component:ProfViewComponent,
+        canActivate:[AuthGuard],
+        children:[
+          {path : 'calendar-view', component:CalendarViewComponent,canActivate:[AuthGuard]},
+          {
+            path : 'administratif-view',
+            component:ProfAdminViewComponent,
+            canActivate:[AuthGuard],
+            children:[
+              {path : 'my-watch', component:MyWatchViewComponent,canActivate:[AuthGuard]},
+              {path : 'absence-adder', component:AbsenceAdderViewComponent,canActivate:[AuthGuard]},
+              {path : 'my-absence', component:MyAbsenceViewComponent,canActivate:[AuthGuard]},
+            ]
+          }
         ]
       },
-      {path : 'subject-view', component:SubjectViewComponent},
-      {path : 'rooms-view', component:RoomsViewComponent},
-      {path : 'professors-view', component:ProfessorsViewComponent},
-      {path : 'students-view', component:StudentsViewComponent},
-      {path : 'class-view', component:ClassViewComponent},
-      {path : 'calendar-view', component:CalendarViewComponent},
-      {path : '' ,redirectTo:'/calendar-view' ,pathMatch:'full'},
-      //faire fonctionner la redirection auto
-      {path : 'gestion-view' ,redirectTo:'subject-view' ,pathMatch:'full'},
-      {path : '**',component:PageNotFoundComponent},
-      
-      
+      {
+        path:'responsable-view',
+        component:ResponsableViewComponent,
+        canActivate:[AuthGuard],
+        children:[
+          {
+            path : 'gestion-view',
+            component:GestionViewComponent,
+            canActivate:[AuthGuard],
+            children :[
+              {path : 'subject-view', component:SubjectViewComponent,canActivate:[AuthGuard]},
+              {path : 'rooms-view', component:RoomsViewComponent,canActivate:[AuthGuard]},
+              {path : 'professors-view', component:ProfessorsViewComponent,canActivate:[AuthGuard]},
+              {path : 'students-view', component:StudentsViewComponent,canActivate:[AuthGuard]},
+              {path : 'class-view', component:ClassViewComponent,canActivate:[AuthGuard]}
+            ]
+          },
+          {path : 'calendar-view', component:CalendarViewComponent,canActivate:[AuthGuard]},
+          {path : 'planner-view', component:RespoPlanningCreatorComponent,canActivate:[AuthGuard]}
+        ]
+      },
+      {
+        path:'student-view',
+        component:StudentViewComponent,
+        canActivate:[AuthGuard],
+        children:[
+          {path : 'calendar-view', component:CalendarViewComponent,canActivate:[AuthGuard]}
+        ]
+      },
+      //Autres vues
+      {path:'login', component:LoginComponent},
+      {path:'',component:ResponsableViewComponent, canActivate:[AuthGuard]},
+      {path : '**',component:PageNotFoundComponent,canActivate:[AuthGuard]},
     ])
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

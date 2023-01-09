@@ -1,0 +1,39 @@
+.left-navbar{
+    float: left;
+    display: block;
+    margin-left: 6%;
+    margin-top: 9%;
+}
+
+a{
+    color:black;
+}
+
+
+
+.activebutton{
+    transition:0.3s;
+    
+    background-color: rgba(25, 153, 132, 0.356);
+}
+
+.container{
+    margin: auto;
+    text-align: center;
+    margin-top: 2%;
+}
+
+#gestion-img{
+    width: 16px;
+    height: 16px;
+    vertical-align: top;
+    margin-right: 2px;
+}
+
+li{
+    padding: 15px;
+}
+
+.container{
+    display:grid;
+}

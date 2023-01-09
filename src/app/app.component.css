@@ -5,18 +5,12 @@
     height: 100%;
     margin: auto;
     display: inline-flex;
-    background-color: white;
-    /*padding: 15px;*/
-    border-radius: 15px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.295);
 }
 
 
 .container{
     margin: auto;
     width: 100%;
-    display: flex;
-    align-items: center;
     
 }
 

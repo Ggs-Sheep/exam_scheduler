@@ -1,0 +1,106 @@
+
+<div class="container">
+    <h1>Outil de création de planning</h1>   
+    <!--
+        Toute la partie ouverture du planning ne correspond pas à un form
+        mais à des boutons et choix qui vont influencer les données disponibles et saisissable dans la
+    -->  
+    <div class="visual-box">
+    <h2>Ouverture du planning</h2>
+    
+        <table>
+            <tbody>
+                <tr>
+                    <td>Début : </td>
+                    <td><input type="date"></td>
+                    <td>Fin (inclus) : </td>
+                    <td><input type="date"></td>
+                </tr>
+            </tbody>
+        </table>
+    
+    
+        <h3>Matière(s) exclue(s)</h3>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Mathématiques</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td>SVT</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td>Français</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td>Sport</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td>SI</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td>Maths expertes</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Spécialité(s) exclue(s)</h3>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Mathématiques</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td>SVT</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td>SI</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td>Littérature</td>
+                    <td><input type="checkbox"></td>
+                </tr>
+            </tbody>
+        </table>
+   
+        <h3>Période(s) exclue(s)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Début</th>
+                    <th>Fin</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="datetime-local"></td>
+                    <td><input type="datetime-local"></td>
+                </tr>
+                <tr>
+                    <!--Ligne qui doit se trouver à la fin de la table-->
+                    <td></td>
+                    <td></td>
+                    <!--Bouton d'ajout d'une nouvelle line juste au dessus de celle-ci-->
+                    <td><button>+</button></td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <h3>Matières à mutualiser</h3>
+        <!--seulement les matières communes aux spécialités-->
+   
+        <h3>Salle(s) exclue(s)</h3>
+</div>
+    
+    
+</div>
