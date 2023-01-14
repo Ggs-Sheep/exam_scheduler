@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -27,6 +26,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './helpers/token.interceptor';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { RedirectionComponent } from './redirection/redirection.component';
+import { AddSubjectViewComponent } from './gestion-view/views/subject-view/subviews/add-subject-view/add-subject-view.component';
+import { VisualizeSubjectViewComponent } from './gestion-view/views/subject-view/subviews/visualize-subject-view/visualize-subject-view.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { RedirectionComponent } from './redirection/redirection.component';
     MyAbsenceViewComponent,
     AbsenceAdderViewComponent,
     RedirectionComponent,
+    AddSubjectViewComponent,
+    VisualizeSubjectViewComponent,
     
   ],
   imports: [
@@ -57,63 +61,8 @@ import { RedirectionComponent } from './redirection/redirection.component';
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
-    AppRoutingModule,
-    RouterModule.forRoot([
-      
-
-      //Vues principales (redirection selon la nature de l'user)
-      {
-        path:'prof-view',
-        component:ProfViewComponent,
-        canActivate:[AuthGuard],
-        children:[
-          {path : 'calendar-view', component:CalendarViewComponent,canActivate:[AuthGuard]},
-          {
-            path : 'administratif-view',
-            component:ProfAdminViewComponent,
-            canActivate:[AuthGuard],
-            children:[
-              {path : 'my-watch', component:MyWatchViewComponent,canActivate:[AuthGuard]},
-              {path : 'absence-adder', component:AbsenceAdderViewComponent,canActivate:[AuthGuard]},
-              {path : 'my-absence', component:MyAbsenceViewComponent,canActivate:[AuthGuard]},
-            ]
-          }
-        ]
-      },
-      {
-        path:'responsable-view',
-        component:ResponsableViewComponent,
-        canActivate:[AuthGuard],
-        children:[
-          {
-            path : 'gestion-view',
-            component:GestionViewComponent,
-            canActivate:[AuthGuard],
-            children :[
-              {path : 'subject-view', component:SubjectViewComponent,canActivate:[AuthGuard]},
-              {path : 'rooms-view', component:RoomsViewComponent,canActivate:[AuthGuard]},
-              {path : 'professors-view', component:ProfessorsViewComponent,canActivate:[AuthGuard]},
-              {path : 'students-view', component:StudentsViewComponent,canActivate:[AuthGuard]},
-              {path : 'class-view', component:ClassViewComponent,canActivate:[AuthGuard]}
-            ]
-          },
-          {path : 'calendar-view', component:CalendarViewComponent,canActivate:[AuthGuard]},
-          {path : 'planner-view', component:RespoPlanningCreatorComponent,canActivate:[AuthGuard]}
-        ]
-      },
-      {
-        path:'student-view',
-        component:StudentViewComponent,
-        canActivate:[AuthGuard],
-        children:[
-          {path : 'calendar-view', component:CalendarViewComponent,canActivate:[AuthGuard]}
-        ]
-      },
-      //Autres vues
-      {path:'login', component:LoginComponent},
-      {path:'',component:ResponsableViewComponent, canActivate:[AuthGuard]},
-      {path : '**',component:PageNotFoundComponent,canActivate:[AuthGuard]},
-    ])
+    RouterModule,
+    AppRoutingModule
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true}

@@ -40,7 +40,7 @@ export class AuthenticationClient {
         //FOR DEBUG PURPOSE ONLY
         if(this.searchForUser(this.users,username,password)){
             console.log("Connected successfully !");
-            return of("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwidXNlcm5hbWUiOiJhZG1pbiIsImlzQWRtaW4iOmZhbHNlLCJpc1Byb2YiOnRydWV9.MezmLIiHM3xZmVXnWuUyqxrV3u5kU7hmBCB6BAcvtxg");
+            return of("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwidXNlcm5hbWUiOiJhZG1pbiIsImlzQWRtaW4iOnRydWUsImlzUHJvZiI6ZmFsc2V9.C3F2JyoZ8_ScojsMmG-v5f8yywRPFZ21n5lDbiFL4jo");
         }else{
             console.log("User not found !");
             return of('');
