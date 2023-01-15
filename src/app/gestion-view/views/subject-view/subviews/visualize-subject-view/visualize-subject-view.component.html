@@ -1,24 +1,40 @@
 <h2>Visualiser une matière</h2>
-Sélectionnez une matière existante : 
-<select>
-    <option>m1</option>
-    <option>m2</option>
-    <option>m3</option>
-    <option>m4</option>
-    <option>m5</option>
-</select>
-<h3>Informations</h3>
-<ul>
-    <li>id : 0</li>
-    <li>Nom : Mathématiques</li>
-    
-</ul>
-<h3>Spécialités concernées :</h3>
-<ul>
-    <li>Mathématiques</li>
-    <li>SVT</li>
-    <li>SI</li>
-</ul>
-<h3>Actions</h3>
-<button class="suppr-button">Supprimer</button>
-<button>Modifier</button>
+<div *ngIf="pageMode==0">
+    Sélectionnez une matière existante : 
+    <select [(ngModel)] = "selectedId">
+        <option *ngFor="let s of data" [ngValue]="s.id">{{s.name}}</option>
+    </select>
+    <h3>Informations</h3>
+    <div >
+        <ul>
+            <li>id : {{getDataById(selectedId!)!.id}}</li>
+            <li>Nom : {{getDataById(selectedId!)!.name}}</li>
+            
+        </ul>
+        <h3>Spécialités concernées :</h3>
+        <ul>
+            <li *ngFor="let c of getRelatedClassDataById(selectedId!)! ">{{c!.name}}</li>
+        </ul>
+        <h3>Actions</h3>
+        <button class="suppr-button">Supprimer</button>
+        <button (click)="goToModifyForm();">Modifier</button>
+    </div>
+</div>
+<div *ngIf="pageMode==1">
+    <form>
+        Vous modifiez la matière suivante : {{getDataById(selectedId!)!.name}}
+        <h3>Informations</h3>
+        <input placeholder="Nom" value={{getDataById(selectedId!)!.name}}>
+        <h3>Spécialités concernées :</h3>
+        <ul>
+            <li *ngFor="let c of getAllClasses()">
+                {{c.name}}
+                <input type="checkbox" [checked]="findIfClassIsRelated(c.id!)" [name]="c.id">
+            </li>
+        </ul>
+        <button class="suppr-button" (click)="goToVisualize();">Retour</button>
+        <input class="submit-button" type="submit" value="Sauvegarder">
+    </form>
+</div>
+
+

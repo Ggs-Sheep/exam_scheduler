@@ -1,4 +1,3 @@
-import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SubjectInterface } from '../types/subject.interface';
@@ -10,42 +9,61 @@ import { of,Observable } from 'rxjs';
 export class SubjectClient {
 
   subjects : SubjectInterface[] = 
-    [
-        {
-            "id":0,
-            "name":"Mathématiques",
-            "classes":["Mathématiques,SVT"]  
-        },
-        {
-            "id":1,
-            "name":"Français Approfondit",
-            "classes":["Français"]
-        }
-    ]
+  [
+      {
+          "id":0,
+          "name":"Mathématiques",
+          "classesId":[0]  
+      },
+      {
+          "id":1,
+          "name":"Français Approfondit",
+          "classesId":[1]
+      }
+  ]
+
+  private data : SubjectInterface[] = [];
+
 
   constructor(private http: HttpClient) {}
 
-  private getObservableData(): Observable<SubjectInterface[]> {
+  private getObservableData(): Observable<any> {
     //Pas oublier de subscribe au retour car de type observable
     //return this.http.get(environment.apiUrl + '/SubjectData');
     return of(this.subjects); //debug purposes
   }
 
-  public getAllSubjectsData() : SubjectInterface | null{
-    this.getObservableData().subscribe(val=>{
-      console.log(val);
-      return val;
-    });
-    return null;
+  //This function returns all data stored in observable as an array of SubjectInterfaces
+  public getAllSubjectsData() : SubjectInterface[] | null{
+    /*
+    let output:SubjectInterface[] = [];
+    this.getObservableData().subscribe((val:SubjectInterface[])=>{output = val}).unsubscribe();
+    return output;
+    */
+    //console.log("getting data");
+    return this.data;
   }
 
+  public refreshSubjectsData(){
+    let output:SubjectInterface[] = [];
+    this.getObservableData().subscribe((val:SubjectInterface[])=>{output = val}).unsubscribe();
+    this.data=output;
+  }
+
+ 
+
+  //This function returns data from the subject you are asking for (w/ id)
   getSubjectData(askedId:number) : SubjectInterface | null{
-    this.subjects.forEach((sub) =>{
+    let output:SubjectInterface | null= null;
+    
+    this.data.forEach((sub) =>{
       if(sub.id == askedId){
-        return sub;
+        
+        output = sub;
       }
-      return null;
     })
-    return null;
+    return output;
+    
+ 
   }
 }

@@ -1,0 +1,27 @@
+<h2>Visualiser un étudiant</h2>
+<div *ngIf="pageMode==0">
+    Sélectionnez un étudiant existant : 
+    <select [(ngModel)] = "selectedId">
+        <option *ngFor="let s of data" [ngValue]="s.id">{{s.familyname}} {{s.name}}</option>
+    </select>
+    <h3>Informations</h3>
+    <ul>
+        <li>id : {{getDataById(selectedId!)!.id}}</li>
+        <li>Nom : {{getDataById(selectedId!)!.familyname}}</li>
+        <li>Prénom : {{getDataById(selectedId!)!.name}}</li>
+        
+    </ul>
+    <h3>Actions</h3>
+    <button class="suppr-button">Supprimer</button>
+    <button (click)="goToModifyForm();">Modifier</button>
+</div>
+<div *ngIf="pageMode==1">
+    <form>
+        Vous modifiez la l'élève suivant : {{getDataById(selectedId!)!.familyname}} {{getDataById(selectedId!)!.name}}
+        <h3>Informations</h3>
+        Nom : <input placeholder="Nom" value={{getDataById(selectedId!)!.familyname}}>
+        Prénom : <input placeholder="Prénom" value={{getDataById(selectedId!)!.name}}><br>
+        <button class="suppr-button" (click)="goToVisualize();">Retour</button>
+        <input class="submit-button" type="submit" value="Sauvegarder">
+    </form>
+</div>

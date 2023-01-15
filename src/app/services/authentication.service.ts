@@ -17,6 +17,7 @@ export class AuthenticationService {
 
   public login(username: string,password: string): void{
     this.authentificationClient.login(username, password).subscribe((token)=>{
+      console.log(token);
       localStorage.setItem(this.tokenKey,token);
       //logique de redirection
       let decodedJWT = JSON.parse(window.atob(token.split('.')[1]));

@@ -29,6 +29,14 @@ import { RedirectionComponent } from './redirection/redirection.component';
 import { AddSubjectViewComponent } from './gestion-view/views/subject-view/subviews/add-subject-view/add-subject-view.component';
 import { VisualizeSubjectViewComponent } from './gestion-view/views/subject-view/subviews/visualize-subject-view/visualize-subject-view.component';
 import { AppRoutingModule } from './app-routing.module';
+import { VisualizeClassViewComponent } from './gestion-view/views/class-view/subviews/visualize-class-view/visualize-class-view.component';
+import { AddClassViewComponent } from './gestion-view/views/class-view/subviews/add-class-view/add-class-view.component';
+import { VisualizeProfViewComponent } from './gestion-view/views/professors-view/subviews/visualize-prof-view/visualize-prof-view.component';
+import { AddProfViewComponent } from './gestion-view/views/professors-view/subviews/add-prof-view/add-prof-view.component';
+import { VisualizeRoomViewComponent } from './gestion-view/views/rooms-view/subviews/visualize-room-view/visualize-room-view.component';
+import { AddRoomViewComponent } from './gestion-view/views/rooms-view/subviews/add-room-view/add-room-view.component';
+import { VisualizeStudentViewComponent } from './gestion-view/views/students-view/subviews/visualize-student-view/visualize-student-view.component';
+import { AddStudentViewComponent } from './gestion-view/views/students-view/subviews/add-student-view/add-student-view.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +62,14 @@ import { AppRoutingModule } from './app-routing.module';
     RedirectionComponent,
     AddSubjectViewComponent,
     VisualizeSubjectViewComponent,
+    VisualizeClassViewComponent,
+    AddClassViewComponent,
+    VisualizeProfViewComponent,
+    AddProfViewComponent,
+    VisualizeRoomViewComponent,
+    AddRoomViewComponent,
+    VisualizeStudentViewComponent,
+    AddStudentViewComponent,
     
   ],
   imports: [

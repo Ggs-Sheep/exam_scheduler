@@ -1,32 +1,24 @@
 <h1>Gestion des étudiants</h1>
-<div class="visual-box">
-    <h2>Visualiser un étudiant</h2>
-    Sélectionnez un étudiant existant : 
-    <select>
-        <option>Maurice Fauron</option>
-        <option>Adèle Mongenet</option>
-        <option>Lorenzo Gomez</option>
-    </select>
-    <h3>Informations</h3>
+<div class="container, left">
     <ul>
-        <li>id : 0</li>
-        <li>Nom : Fauron</li>
-        <li>Prénom : Maurice</li>
-        
+        <li>
+            <a routerLink="visualize-student" 
+            routerLinkActive="activebutton"
+            ariaCurrentWhenActive="step">
+            Visualiser
+            </a>
+            
+        </li>
+        <li>
+            <a routerLink="add-student" 
+            routerLinkActive="activebutton"
+            ariaCurrentWhenActive="step">
+            Ajouter
+            </a>
+        </li>
     </ul>
-    <h3>Actions</h3>
-    <button class="suppr-button">Supprimer</button>
-    <button>Modifier</button>
     
-</div><br>
-<div class="visual-box">
-    <h2>Ajouter un étudiant</h2>
-    <form>
-        
-        <input type="text" placeholder="Nom">
-        <input type="text" placeholder="Prénom"><br>
-        
-        <input type="submit" value="Ajouter">
-    </form>
-    
+</div>
+<div class="container">
+    <router-outlet></router-outlet>
 </div>

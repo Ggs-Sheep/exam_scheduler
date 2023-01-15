@@ -12,11 +12,7 @@ a{
 
 
 
-.activebutton{
-    transition:0.3s;
-    
-    background-color: rgba(25, 153, 132, 0.356);
-}
+
 
 .container{
     margin: auto;

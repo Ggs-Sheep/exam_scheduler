@@ -23,6 +23,14 @@ import { AuthGuard } from './helpers/auth.guard';
 import { RedirectionComponent } from './redirection/redirection.component';
 import { AddSubjectViewComponent } from './gestion-view/views/subject-view/subviews/add-subject-view/add-subject-view.component';
 import { VisualizeSubjectViewComponent } from './gestion-view/views/subject-view/subviews/visualize-subject-view/visualize-subject-view.component';
+import { VisualizeClassViewComponent } from './gestion-view/views/class-view/subviews/visualize-class-view/visualize-class-view.component';
+import { AddClassViewComponent } from './gestion-view/views/class-view/subviews/add-class-view/add-class-view.component';
+import { VisualizeProfViewComponent } from './gestion-view/views/professors-view/subviews/visualize-prof-view/visualize-prof-view.component';
+import { AddProfViewComponent } from './gestion-view/views/professors-view/subviews/add-prof-view/add-prof-view.component';
+import { VisualizeRoomViewComponent } from './gestion-view/views/rooms-view/subviews/visualize-room-view/visualize-room-view.component';
+import { AddRoomViewComponent } from './gestion-view/views/rooms-view/subviews/add-room-view/add-room-view.component';
+import { VisualizeStudentViewComponent } from './gestion-view/views/students-view/subviews/visualize-student-view/visualize-student-view.component';
+import { AddStudentViewComponent } from './gestion-view/views/students-view/subviews/add-student-view/add-student-view.component';
 
 const routes: Routes = [
    //Vues principales (redirection selon la nature de l'user)
@@ -54,14 +62,27 @@ const routes: Routes = [
         component:GestionViewComponent,
         canActivate:[AuthGuard],
         children :[
-          {path : 'students-view', component:StudentViewComponent,canActivate:[AuthGuard]},
-          {path : 'rooms-view', component:RoomsViewComponent,canActivate:[AuthGuard]},
-          {path : 'professors-view', component:ProfessorsViewComponent,canActivate:[AuthGuard]},
+          {path : 'students-view', component:StudentsViewComponent,canActivate:[AuthGuard], children:[
+            {path : 'add-student', component:AddStudentViewComponent,canActivate:[AuthGuard]},
+            {path : 'visualize-student', component:VisualizeStudentViewComponent,canActivate:[AuthGuard]},
+          ]},
+          {path : 'rooms-view', component:RoomsViewComponent,canActivate:[AuthGuard], children:[
+            {path : 'add-room', component:AddRoomViewComponent,canActivate:[AuthGuard]},
+            {path : 'visualize-room', component:VisualizeRoomViewComponent,canActivate:[AuthGuard]},
+          ]},
+          {path : 'professors-view', component:ProfessorsViewComponent,canActivate:[AuthGuard], children:[
+            {path : 'add-prof', component:AddProfViewComponent,canActivate:[AuthGuard]},
+            {path : 'visualize-prof', component:VisualizeProfViewComponent,canActivate:[AuthGuard]},
+          ]},
           {path : 'subject-view', component:SubjectViewComponent,canActivate:[AuthGuard], children:[
             {path : 'add-subject', component:AddSubjectViewComponent,canActivate:[AuthGuard]},
             {path : 'visualize-subject', component:VisualizeSubjectViewComponent,canActivate:[AuthGuard]},
           ]},
-          {path : 'class-view', component:ClassViewComponent,canActivate:[AuthGuard]}
+          {path : 'class-view', component:ClassViewComponent,canActivate:[AuthGuard], children:[
+            {path : 'add-class', component:AddClassViewComponent,canActivate:[AuthGuard]},
+            {path : 'visualize-class', component:VisualizeClassViewComponent,canActivate:[AuthGuard]},
+          ]},
+          
         ]
       },
       {path : 'calendar-view', component:CalendarViewComponent,canActivate:[AuthGuard]},
@@ -80,6 +101,7 @@ const routes: Routes = [
   {path:'login', component:LoginComponent},
   {path:'',component:ResponsableViewComponent, canActivate:[AuthGuard]},
   {path : '**',component:PageNotFoundComponent,canActivate:[AuthGuard]},
+
 ];
 
 @NgModule({

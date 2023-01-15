@@ -1,58 +1,26 @@
 <h1>Gestion des Spécialités</h1>
-<div class="visual-box">
-    <h2>Visualiser une spécialité</h2>
-    Sélectionnez une spécialité existante : 
-    <select>
-        <option>Mathématiques</option>
-        <option>SVT</option>
-        <option>SI</option>
-        <option>Français</option>
-    </select>
-    <h3>Informations</h3>
+<div class="container, left">
     <ul>
-        <li>id : 0</li>
-        <li>Nom : Mathématiques</li>
-        
+        <li>
+            <a routerLink="visualize-class" 
+            routerLinkActive="activebutton"
+            ariaCurrentWhenActive="step">
+            Visualiser
+            </a>
+            
+        </li>
+        <li>
+            <a routerLink="add-class" 
+            routerLinkActive="activebutton"
+            ariaCurrentWhenActive="step">
+            Ajouter
+            </a>
+        </li>
     </ul>
-    <h3>Matières concernées :</h3>
-    <ul>
-        <li>Mathématiques</li>
-        <li>Maths expertes</li>
-        <li>Sport</li>
-        <li>Français</li>
-    </ul>
-    <h3>Actions</h3>
-    <button class="suppr-button">Supprimer</button>
-    <button>Modifier</button>
-    
-</div><br>
-<div class="visual-box">
-    <h2>Ajouter une matière</h2>
-    <form>
-        
-        <input type="text" placeholder="Nom de la matière">
-        <h3>Matières concernées :</h3>
-        <table>
-            <tbody>
-                <tr>
-                    <td>Mathématiques</td>
-                    <td><input type="checkbox"></td>
-                </tr>
-                <tr>
-                    <td>Maths expertes</td>
-                    <td><input type="checkbox"></td>
-                </tr>
-                <tr>
-                    <td>Sport</td>
-                    <td><input type="checkbox"></td>
-                </tr>
-                <tr>
-                    <td>Français</td>
-                    <td><input type="checkbox"></td>
-                </tr>
-            </tbody>
-        </table>
-        <input type="submit" value="Ajouter">
-    </form>
     
 </div>
+
+<div class="container">
+    <router-outlet></router-outlet>
+</div>
+

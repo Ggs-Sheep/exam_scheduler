@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup,FormControl,Validators} from '@angular/forms';
 import {AuthenticationService} from '../services/authentication.service';
-
+import { HttpClient } from '@angular/common/http';
+import fetch from 'node-fetch';
 
 
 
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
   public loginForm!:FormGroup;
 
 
-  constructor(private authenticationService:AuthenticationService) { 
+  constructor(private authenticationService:AuthenticationService,private http:HttpClient) { 
     
   }
 
@@ -23,7 +24,9 @@ export class LoginComponent implements OnInit {
       username: new FormControl('',Validators.required),
       password: new FormControl('',Validators.required),
     });
-    console.log("working");
+    
+    
+    
   }
 
   public onSubmit(){
