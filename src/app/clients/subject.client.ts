@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { SubjectInterface } from '../types/subject.interface';
 import { of,Observable } from 'rxjs';
 import { ApiHttpService } from '../services/apihttp.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -29,8 +30,17 @@ export class SubjectClient {
   constructor(private http: HttpClient,private apiServices:ApiHttpService) {}
 
   private async getObservableData(): Promise<Observable<any>> {
-    var request = this.apiServices.get('/subject')
+    var request = this.apiServices.get('/subject',{
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credential':'true',
+      'Access-Control-Allow-Methods':'POST,GET,DELETE,OPTIONS,PUT',
+      'Access-Control-Allow-Headers':'*,Content-Type, Accept, X-Requested-With, remember-me',
+      'Access-Control-Max-Age':'3600',
+      'Accept':'*/*',
+      'User-Agent':'PostmanRuntime/7.28.4'
+    })
     var toObs = {"user":(await request).data}
+    console.log(toObs);
     return of(JSON.stringify(toObs)); //debug purposes
   }
 
@@ -71,13 +81,13 @@ export class SubjectClient {
 
   public createNewSubject(name:string){
     //requête de création
-    this.apiServices.post('/subject',{"name":name},{'Access-Control-Allow-Origin': '*',"Access-Control-Allow-Headers":"*",'Accept':'*/*','User-Agent':'PostmanRuntime/7.28.4'})
-    console.log("succeffuly created "+name);
+    this.apiServices.post('/subject/',{"name":name},environment.headers)
+    console.log("tryed creating "+name);
   }
 
   public modifySubject(id:number,name:string){
     //requête de création
-    this.apiServices.post('/subject/'+id,{"name":name})
-    console.log("successfully modified "+name);
+    this.apiServices.post('/subject/'+id,{"name":name},environment.headers)
+    console.log("tryed modifying "+name);
   }
 }
