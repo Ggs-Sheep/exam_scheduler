@@ -1,3 +1,24 @@
 {
-    
+    "subjects":[
+        {
+            "id":0,
+            "name":"Mathématiques"
+        },
+        {
+            "id":1,
+            "name":"Français"
+        },
+        {
+            "id":2,
+            "name":"Espagnol"
+        },
+        {
+            "id":3,
+            "name":"SVT"
+        },
+        {
+            "id":4,
+            "name":"Sport"
+        }
+    ]
 }

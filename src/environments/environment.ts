@@ -4,7 +4,14 @@
 
 export const environment = {
   production: false,
-  apiUrl:'http://examschedulerapi.clarenceclaux.fr',
+  apiUrl:'https://examschedulerapi.clarenceclaux.fr',
+  headers:{
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers':'*,Content-Type, Accept, X-Requested-With, remember-me',
+    'Accept':'*/*',
+    'User-Agent':'PostmanRuntime/7.28.4',
+    'Authorization':'Bearer '+localStorage.getItem('token'),
+  }
 };
 
 /*
