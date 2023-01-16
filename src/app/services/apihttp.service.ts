@@ -10,15 +10,26 @@ export class ApiHttpService {
     constructor( 
     // Angular Modules 
     ) { } 
-    public get(url: string):Promise<AxiosResponse<any>> { 
-        const resp =  axios.get('https://examschedulerapi.clarenceclaux.fr'+url);
-        console.log(resp);
+    public get(url: string,header?:any):Promise<AxiosResponse<any>> { 
+        const options = {
+            method: 'GET',
+            headers: 
+            {   header,
+                'content-type': 'application/json' ,
+            },
+            url:'https://examschedulerapi.clarenceclaux.fr'+url,
+        };
+        var resp = axios(options);
         return resp; 
     } 
-    public async post(url: string, data: any):Promise<AxiosResponse<any>>  { 
+    public async post(url: string, data: any,header?:any):Promise<AxiosResponse<any>>  { 
         const options = {
             method: 'POST',
-            headers: { 'content-type': 'application/json' },
+            headers: 
+            { 
+                header,
+                'content-type': 'application/json' ,
+            },
             data: data,
             url:'https://examschedulerapi.clarenceclaux.fr'+url,
         };

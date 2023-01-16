@@ -3,7 +3,8 @@ import { SubjectClient } from 'src/app/clients/subject.client';
 import { SubjectInterface } from 'src/app/types/subject.interface';
 import { ClassInterface } from 'src/app/types/class.interface';
 import { ClassesClient } from 'src/app/clients/classes.client';
-
+import { ApiHttpService } from 'src/app/services/apihttp.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-visualize-subject-view',
   templateUrl: './visualize-subject-view.component.html',
@@ -14,17 +15,27 @@ export class VisualizeSubjectViewComponent implements OnInit {
   public data:SubjectInterface[]= [];
   public selectedId =-1;
   public pageMode = 0; //0 for visualize, 1 for modify form;
-
-  constructor(private subjectClient:SubjectClient,private classesClient:ClassesClient) { 
+  public modifyForm!:FormGroup;
+  constructor(
+    private subjectClient:SubjectClient,
+    private classesClient:ClassesClient,
+    private apiServices:ApiHttpService
+    ) { 
 
   }
 
   ngOnInit(): void {
+    this.modifyForm = new FormGroup({
+      name: new FormControl('',Validators.required),
+      
+    });
     this.pageMode = 0;
     
     this.subjectClient.refreshSubjectsData();
     this.classesClient.refreshClassesData();
-    this.data = this.subjectClient.getAllSubjectsData()!;
+    this.subjectClient.getAllSubjectsData()!.then((data)=>{
+      this.data = data!;
+    });
     this.selectedId = this.data[0].id;
     
     
@@ -65,4 +76,10 @@ export class VisualizeSubjectViewComponent implements OnInit {
     return this.classesClient.getAllClassesData()!;
   }
 
+  public onSubmit(){
+    this.subjectClient.modifySubject(
+      this.selectedId!,
+      this.modifyForm.get('name')!.value!
+    )
+  }
 }

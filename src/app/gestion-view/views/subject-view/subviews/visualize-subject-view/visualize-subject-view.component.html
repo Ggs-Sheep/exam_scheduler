@@ -21,19 +21,19 @@
     </div>
 </div>
 <div *ngIf="pageMode==1">
-    <form>
+    <form [formGroup]="modifyForm" id="modifyForm">
         Vous modifiez la matière suivante : {{getDataById(selectedId!)!.name}}
         <h3>Informations</h3>
-        <input placeholder="Nom" value={{getDataById(selectedId!)!.name}}>
+        <input matInput formControlName="name" placeholder="Nom" value={{getDataById(selectedId!)!.name}}>
         <h3>Spécialités concernées :</h3>
         <ul>
             <li *ngFor="let c of getAllClasses()">
                 {{c.name}}
-                <input type="checkbox" [checked]="findIfClassIsRelated(c.id!)" [name]="c.id">
+                <input matInput [formControlName]="c.id!" type="checkbox" [checked]="findIfClassIsRelated(c.id!)" [value]="c.id" >
             </li>
         </ul>
         <button class="suppr-button" (click)="goToVisualize();">Retour</button>
-        <input class="submit-button" type="submit" value="Sauvegarder">
+        <input class="submit-button" type="submit" value="Sauvegarder" (click)="onSubmit()">
     </form>
 </div>
 

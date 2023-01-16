@@ -48,7 +48,12 @@ export class RespoPlanningCreatorComponent implements OnInit {
   }
 
   public getAllSubjects():SubjectInterface[]{
-    return this.subjectClient.getAllSubjectsData()!;
+    var data = this.subjectClient.getAllSubjectsData()!;
+    var output:SubjectInterface[] = [];
+    data.then((d)=>{
+      output=d!;
+    })
+    return output;
   }
 
   public returnArray(value:number){
