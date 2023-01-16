@@ -81,13 +81,25 @@ export class SubjectClient {
 
   public createNewSubject(name:string){
     //requête de création
-    this.apiServices.post('/subject/',{"name":name},environment.headers)
+    this.apiServices.post('/subject/',{"name":name},{
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers':'*,Content-Type, Accept, X-Requested-With, remember-me',
+      'Accept':'*/*',
+      'User-Agent':'PostmanRuntime/7.28.4',
+      'Authorization':'Bearer '+localStorage.getItem('token'),
+    })
     console.log("tryed creating "+name);
   }
 
   public modifySubject(id:number,name:string){
     //requête de création
-    this.apiServices.post('/subject/'+id,{"name":name},environment.headers)
+    this.apiServices.post('/subject/'+id,{"name":name},{
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers':'*,Content-Type, Accept, X-Requested-With, remember-me',
+      'Accept':'*/*',
+      'User-Agent':'PostmanRuntime/7.28.4',
+      'Authorization':'Bearer '+localStorage.getItem('token'),
+    })
     console.log("tryed modifying "+name);
   }
 }
