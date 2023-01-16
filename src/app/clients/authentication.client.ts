@@ -49,12 +49,14 @@ export class AuthenticationClient {
             return of('');
         }
         */
-        var request = this.apiServices.post('/authenticate',{'email':username,'password':password});
+        var request = await this.apiServices.postNoHeader('/authenticate',{'email':username,'password':password});
         //console.log((await request)?.data);
-        var toObs = {"user":(await request)?.data.user,"token":(await request)?.data.token}
+        
+        //var toObs = {"user":request?.,"token":(await request)?.data.token}
         //console.log(toObs);
         
-        return of(JSON.stringify(toObs));
+        
+        return of(JSON.stringify(''));
        
 
         

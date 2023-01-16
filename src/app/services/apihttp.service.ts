@@ -1,7 +1,6 @@
 // Angular Modules 
 import { Injectable } from '@angular/core'; 
-import axios, { AxiosResponse } from 'axios';
-import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',
@@ -9,33 +8,54 @@ import { environment } from '../../environments/environment';
 export class ApiHttpService { 
     constructor( 
     // Angular Modules 
+    private _http:HttpClient
     ) { } 
-    public get(url: string,header?:any):Promise<AxiosResponse<any>> { 
+    public async get(url: string):Promise<Response> { 
+        console.log('Trying to get');
         const options = {
             method: 'GET',
             headers: 
-            {   header,
+            {   'Authorization':'Bearer '+sessionStorage.getItem('token'),
                 'content-type': 'application/json' ,
             },
-            url:'https://examschedulerapi.clarenceclaux.fr'+url,
+            
         };
-        var resp = axios(options);
+        var resp = await fetch('http://examschedulerapi-env.eba-4uj6tzx8.eu-west-1.elasticbeanstalk.com'+url,options)
         return resp; 
     } 
-    public async post(url: string, data: any,header?:any):Promise<AxiosResponse<any>>  { 
+    public async post(url: string, data: any):Promise<Response> { 
+        console.log('Trying to post');
+        const options = {
+            method: 'POST',
+            headers: 
+            {
+                'Authorization':'Bearer '+sessionStorage.getItem('token'),
+                'content-type': 'application/json' ,
+            },
+            body: JSON.stringify(data)
+        };
+        var resp = await fetch('http://examschedulerapi-env.eba-4uj6tzx8.eu-west-1.elasticbeanstalk.com'+url,options)
+        
+        //console.log((await resp).data);
+        return resp;
+    } 
+
+    public async postNoHeader(url: string, data: any):Promise<Response>  { 
         const options = {
             method: 'POST',
             headers: 
             { 
-                header,
+               
                 'content-type': 'application/json' ,
             },
-            data: data,
-            url:'https://examschedulerapi.clarenceclaux.fr'+url,
+            body: JSON.stringify(data)
         };
-        var resp = axios(options);
+        //var resp = axios(options);
+        //var resp:Observable<any> = of('');
         
-        //console.log((await resp).data);
+        var resp = await fetch('http://examschedulerapi-env.eba-4uj6tzx8.eu-west-1.elasticbeanstalk.com'+url,options)
+        
+        //console.log(resp);
         return resp;
     } 
 

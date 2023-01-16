@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class SubjectClient {
+  
   /*
   subjects : SubjectInterface[] = 
   [
@@ -30,18 +31,10 @@ export class SubjectClient {
   constructor(private http: HttpClient,private apiServices:ApiHttpService) {}
 
   private async getObservableData(): Promise<Observable<any>> {
-    var request = this.apiServices.get('/subject',{
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credential':'true',
-      'Access-Control-Allow-Methods':'POST,GET,DELETE,OPTIONS,PUT',
-      'Access-Control-Allow-Headers':'*,Content-Type, Accept, X-Requested-With, remember-me',
-      'Access-Control-Max-Age':'3600',
-      'Accept':'*/*',
-      'User-Agent':'PostmanRuntime/7.28.4'
-    })
-    var toObs = {"user":(await request).data}
-    console.log(toObs);
-    return of(JSON.stringify(toObs)); //debug purposes
+    var data = await this.apiServices.get('/subject')
+    var text = await data.text();
+    console.log(text);
+    return of(JSON.stringify(text)); //debug purposes
   }
 
   //This function returns all data stored in observable as an array of SubjectInterfaces
@@ -79,27 +72,17 @@ export class SubjectClient {
  
   }
 
-  public createNewSubject(name:string){
+  public async createNewSubject(name:string){
     //requête de création
-    this.apiServices.post('/subject/',{"name":name},{
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers':'*,Content-Type, Accept, X-Requested-With, remember-me',
-      'Accept':'*/*',
-      'User-Agent':'PostmanRuntime/7.28.4',
-      'Authorization':'Bearer '+localStorage.getItem('token'),
-    })
+    var data = await this.apiServices.post('/subject/',{"name":name})
     console.log("tryed creating "+name);
+    console.log(JSON.parse(await data.text()))
+    
   }
 
   public modifySubject(id:number,name:string){
     //requête de création
-    this.apiServices.post('/subject/'+id,{"name":name},{
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers':'*,Content-Type, Accept, X-Requested-With, remember-me',
-      'Accept':'*/*',
-      'User-Agent':'PostmanRuntime/7.28.4',
-      'Authorization':'Bearer '+localStorage.getItem('token'),
-    })
+    this.apiServices.post('/subject/'+id,{"name":name})
     console.log("tryed modifying "+name);
   }
 }
