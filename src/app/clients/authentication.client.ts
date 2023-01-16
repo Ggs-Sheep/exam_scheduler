@@ -50,8 +50,9 @@ export class AuthenticationClient {
         }
         */
         var request = this.apiServices.post('/authenticate',{'email':username,'password':password});
-        console.log(this.apiServices.post('/authenticate',{'email':username,'password':password}));
-        var toObs = {"user":(await request).data.user,"token":(await request).data.token}
+        //console.log((await request)?.data);
+        var toObs = {"user":(await request)?.data.user,"token":(await request)?.data.token}
+        //console.log(toObs);
         
         return of(JSON.stringify(toObs));
        
