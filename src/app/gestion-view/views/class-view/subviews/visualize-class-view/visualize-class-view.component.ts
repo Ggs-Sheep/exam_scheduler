@@ -31,7 +31,7 @@ export class VisualizeClassViewComponent implements OnInit {
 
   public fetchAllRelatedSubjects(id:number):SubjectInterface[]{
     var output:SubjectInterface[] = []
-    this.subjectClient.getAllSubjectsData()!.forEach((key:SubjectInterface)=>{
+    this.getAllSubjects()!.forEach((key:SubjectInterface)=>{
       key.classesId.forEach((idx:number)=>{
         if(idx == id){
           output.push(key);
@@ -42,7 +42,12 @@ export class VisualizeClassViewComponent implements OnInit {
   }
 
   public getAllSubjects():SubjectInterface[]{
-    return this.subjectClient.getAllSubjectsData()!;
+    var data = this.subjectClient.getAllSubjectsData()!;
+    var output:SubjectInterface[] = [];
+    data.then((d)=>{
+      output=d!;
+    })
+    return output;
   }
 
   public findIfSubjectIsRelated(id:number):boolean{

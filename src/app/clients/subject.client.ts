@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SubjectInterface } from '../types/subject.interface';
 import { of,Observable } from 'rxjs';
+import { ApiHttpService } from '../services/apihttp.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SubjectClient {
-
+  /*
   subjects : SubjectInterface[] = 
   [
       {
@@ -21,39 +22,40 @@ export class SubjectClient {
           "classesId":[1]
       }
   ]
-
+  */
   private data : SubjectInterface[] = [];
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private apiServices:ApiHttpService) {}
 
-  private getObservableData(): Observable<any> {
-    //Pas oublier de subscribe au retour car de type observable
-    //return this.http.get(environment.apiUrl + '/SubjectData');
-    return of(this.subjects); //debug purposes
+  private async getObservableData(): Promise<Observable<any>> {
+    var request = this.apiServices.get('/subject')
+    var toObs = {"user":(await request).data}
+    return of(JSON.stringify(toObs)); //debug purposes
   }
 
   //This function returns all data stored in observable as an array of SubjectInterfaces
-  public getAllSubjectsData() : SubjectInterface[] | null{
-    /*
+  public async getAllSubjectsData() : Promise<SubjectInterface[] | null>{
+    
     let output:SubjectInterface[] = [];
-    this.getObservableData().subscribe((val:SubjectInterface[])=>{output = val}).unsubscribe();
+    (await this.getObservableData()).subscribe((val:SubjectInterface[])=>{output = val}).unsubscribe();
+    console.log("getting data");
     return output;
-    */
-    //console.log("getting data");
-    return this.data;
+    
+    
+    
   }
 
-  public refreshSubjectsData(){
+  public async refreshSubjectsData(){
     let output:SubjectInterface[] = [];
-    this.getObservableData().subscribe((val:SubjectInterface[])=>{output = val}).unsubscribe();
+    (await this.getObservableData()).subscribe((val:SubjectInterface[])=>{output = val}).unsubscribe();
     this.data=output;
   }
 
  
 
   //This function returns data from the subject you are asking for (w/ id)
-  getSubjectData(askedId:number) : SubjectInterface | null{
+  public getSubjectData(askedId:number) : SubjectInterface | null{
     let output:SubjectInterface | null= null;
     
     this.data.forEach((sub) =>{
@@ -65,5 +67,17 @@ export class SubjectClient {
     return output;
     
  
+  }
+
+  public createNewSubject(name:string){
+    //requête de création
+    this.apiServices.post('/subject',{"name":name},{'Access-Control-Allow-Origin': '*',"Access-Control-Allow-Headers":"*",'Accept':'*/*','User-Agent':'PostmanRuntime/7.28.4'})
+    console.log("succeffuly created "+name);
+  }
+
+  public modifySubject(id:number,name:string){
+    //requête de création
+    this.apiServices.post('/subject/'+id,{"name":name})
+    console.log("successfully modified "+name);
   }
 }

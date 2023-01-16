@@ -21,6 +21,7 @@ export class SubjectViewComponent implements OnInit {
   }
 
   
+  
 
   
 
