@@ -12,13 +12,13 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
 
-    var token = this.authenticationService.getToken();
+    this.user = JSON.parse(localStorage.getItem('user')!);
+    console.log(this.user);
     
-    if(token == null){return;}
+    if(this.user == null){return;}
 
-    this.user = JSON.parse(window.atob(token.split('.')[1]));
-    //console.log(this.user.isAdmin);
-    console.log(this.user.isProf);
+    
+    
     
     
   }

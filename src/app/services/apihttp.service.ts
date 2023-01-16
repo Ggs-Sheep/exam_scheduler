@@ -11,7 +11,7 @@ export class ApiHttpService {
     // Angular Modules 
     ) { } 
     public get(url: string):Promise<AxiosResponse<any>> { 
-        const resp =  axios.get('http://examschedulerapi.clarenceclaux.fr'+url);
+        const resp =  axios.get('https://examschedulerapi.clarenceclaux.fr'+url);
         console.log(resp);
         return resp; 
     } 
@@ -20,12 +20,12 @@ export class ApiHttpService {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             data: data,
-            url:'http://examschedulerapi.clarenceclaux.fr'+url,
+            url:'https://examschedulerapi.clarenceclaux.fr'+url,
         };
         var resp = axios(options);
-        //const resp = await axios.post( headers: { 'content-type': 'application/x-www-form-urlencoded' },environment.apiUrl + url,data);
-        console.log((await resp).data);
-        return (await resp).data;
+        
+        //console.log((await resp).data);
+        return resp;
     } 
 
     
