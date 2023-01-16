@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationClient } from '../clients/authentication.client';
-import jwt_decode from 'jwt-decode';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,8 @@ export class AuthenticationService {
     private router: Router
   ) { }
 
-  public login(username: string,password: string): void{
-    this.authentificationClient.login(username, password).subscribe((token)=>{
+  public async login(username: string,password: string): Promise<void>{
+    (await this.authentificationClient.login(username, password)).subscribe((token)=>{
       console.log(token);
       localStorage.setItem(this.tokenKey,token);
       //logique de redirection

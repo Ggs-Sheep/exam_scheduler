@@ -1,15 +1,16 @@
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of,Observable } from 'rxjs';
-import {UserInterface} from '../types/user.interface'
+import { UserInterface } from '../types/user.interface'
 import { ApiHttpService } from '../services/apihttp.service';
+import axios from 'axios';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationClient {
-    
+    /*
     //Uniquement pour débug
     users : UserInterface[] = 
     [
@@ -32,49 +33,37 @@ export class AuthenticationClient {
             "password":"admin"
         }
     ]
+    */
 
+    constructor(private apiServices:ApiHttpService) {}
 
-    constructor(private http: HttpClient) {}
-
-    public login(username: string, password: string): Observable<string> {
+    public async login(username: string, password: string): Promise<Observable<string>> {
         
         //FOR DEBUG PURPOSE ONLY
         /*
         if(this.searchForUser(this.users,username,password)){
             console.log("Connected successfully !");
-            return of("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwidXNlcm5hbWUiOiJhZG1pbiIsImlzQWRtaW4iOnRydWUsImlzUHJvZiI6ZmFsc2V9.C3F2JyoZ8_ScojsMmG-v5f8yywRPFZ21n5lDbiFL4jo");
+            return of("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwidXNlcm5hbWUiOiJhZG1pbiIsImlzQWRtaW4iOmZhbHNlLCJpc1Byb2YiOmZhbHNlfQ.msPv1yhQqhc5rAVFi3LrQtNr0uEWDzii2uc4SwRQ0LI");
         }else{
             console.log("User not found !");
             return of('');
         }
         */
+        var request = this.apiServices.post('/authenticate',{'email':username,'password':password});
+        console.log(this.apiServices.post('/authenticate',{'email':username,'password':password}));
+        var toObs = {"user":(await request).data.user,"token":(await request).data.token}
         
-        
-        /*
-        return this.http.post(
-        environment.apiUrl + '/authenticate',
-        {
-            username: username,
-            password: password,
-        },
-        { responseType: 'text' });
-        */
-       return of('');
-        
+        return of(JSON.stringify(toObs));
        
 
         
     }
 
-    //debug purpose only
-    private searchForUser(dataset:UserInterface[],username: string, password:string):boolean{
-        for(var user of dataset){
-            if(user.username == username && user.password == password){
-                return true;
-            }
-        }
-        return false;
-    }
+    
+
+
+    
+    
 
   
 }

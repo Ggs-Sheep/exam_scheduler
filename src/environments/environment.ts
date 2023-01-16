@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl:'examschedulerapi.clarenceclaux.fr',
+  apiUrl:'http://examschedulerapi-env.eba-4uj6tzx8.eu-west-1.elasticbeanstalk.com',
 };
 
 /*

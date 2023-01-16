@@ -21,7 +21,7 @@ import { RespoPlanningCreatorComponent } from './respo-planning-creator/respo-pl
 import { MyWatchViewComponent } from './prof-admin-view/views/my-watch-view/my-watch-view.component';
 import { MyAbsenceViewComponent } from './prof-admin-view/views/my-absence-view/my-absence-view.component';
 import { AbsenceAdderViewComponent } from './prof-admin-view/views/absence-adder-view/absence-adder-view.component';
-import { AuthGuard } from './helpers/auth.guard';
+
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './helpers/token.interceptor';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
@@ -37,6 +37,7 @@ import { VisualizeRoomViewComponent } from './gestion-view/views/rooms-view/subv
 import { AddRoomViewComponent } from './gestion-view/views/rooms-view/subviews/add-room-view/add-room-view.component';
 import { VisualizeStudentViewComponent } from './gestion-view/views/students-view/subviews/visualize-student-view/visualize-student-view.component';
 import { AddStudentViewComponent } from './gestion-view/views/students-view/subviews/add-student-view/add-student-view.component';
+import { ApiHttpService } from './services/apihttp.service';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { AddStudentViewComponent } from './gestion-view/views/students-view/subv
     ReactiveFormsModule,
     BrowserModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true}
