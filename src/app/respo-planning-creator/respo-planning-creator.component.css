@@ -1,0 +1,22 @@
+.container{
+    margin: auto;
+    text-align: center;
+}
+.page-container{
+    
+    margin: auto;
+    text-align: center;
+}
+
+.visual-box{
+    display: inline-block;
+    margin : 10px;
+    vertical-align: top;
+    text-align: left;  
+    margin: 10px;
+    width: max-content;
+    min-height :max-content;
+    width: max-content;
+    
+    
+}

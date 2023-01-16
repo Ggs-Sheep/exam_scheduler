@@ -1,0 +1,13 @@
+{
+    "users":[
+        {
+            "id":0,
+            "prenom":"jason",
+            "nom":"mongeain",
+            "isProf":false,
+            "isAdmin":false,
+            "nickname":"e-jason",
+            "password":"jason"
+        }
+    ]
+}

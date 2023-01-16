@@ -1,0 +1,91 @@
+
+<div class="container">
+    <h1>Outil de création de planning</h1>   
+    <!--
+        Toute la partie ouverture du planning ne correspond pas à un form
+        mais à des boutons et choix qui vont influencer les données disponibles et saisissable dans la
+    -->  
+    <div class="visual-box">
+    <h2>Ouverture du planning</h2>
+    <form name="plannerform">
+        <table>
+            <tbody>
+                <tr>
+                    <td>Début : </td>
+                    <td><input name="startdate" type="date"></td>
+                    <td>Fin (inclus) : </td>
+                    <td><input name="enddate" type="date"></td>
+                </tr>
+            </tbody>
+        </table>
+    
+    
+        <h3>Matière(s) exclue(s)</h3>
+        <table>
+            <tbody>
+                <tr *ngFor="let s of getAllSubjects()" >
+                    <td>{{s.name}}</td>
+                    <td><input [name]="s.id" type="checkbox"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Spécialité(s) exclue(s)</h3>
+        <table>
+            <tbody>
+                <tr *ngFor="let c of getAllClasses()" >
+                    <td>{{c.name}}</td>
+                    <td><input class="classescheckboxes" [name]="c.id" type="checkbox" ></td>
+                </tr>
+            </tbody>
+        </table>
+   
+        <h3>Période(s) exclue(s)</h3>
+        Nombre de périodes à exclure : <input (change)="setPeriodsAmount($event)" placeholder="0">
+        <table>
+            <thead>
+                <tr>
+                    <th>Début</th>
+                    <th>Fin</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let n of returnArray(periodsAmount)">
+                    <td><input type="datetime-local"></td>
+                    <td><input type="datetime-local"></td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <h3>Matières à mutualiser</h3>
+        <i>Les matières sélectionnées sont mutualisées pour les spécialités non exclues.</i>
+        <table>
+            <tbody>
+                <tr *ngFor="let s of getAllSubjects()" >
+                    <td>{{s.name}}</td>
+                    <td><input [name]="s.id" type="checkbox"></td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Salle(s) exclue(s)</h3>
+        <i>Les salles indisponibles ne sont pas affichées</i>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Capacité</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let r of getAvailableRooms()">
+                    <td>{{r.name}}</td>
+                    <td>{{r.capacity}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <input class="submit-button" type="submit" value="Créer le planning">
+    </form>
+</div>
+    
+    
+</div>

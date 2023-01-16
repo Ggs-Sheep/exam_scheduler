@@ -1,0 +1,47 @@
+<div class="navbar-container">
+    <b id="appTitle">ExamScheduler<img id="titleImage" src="../../assets/images/icons/app_icon.png"></b>
+    
+    <nav id="top-navbar" class="navbar" *ngIf="user.isAdmin">
+        
+        <a routerLink="/responsable-view/calendar-view" 
+            routerLinkActive="activebutton"
+            ariaCurrentWhenActive="page">
+            Plannings
+        </a>
+        <a routerLink="/responsable-view/planner-view" 
+            routerLinkActive="activebutton"
+            ariaCurrentWhenActive="page">
+            Créer planning
+        </a>
+        <a routerLink="/responsable-view/gestion-view"
+            routerLinkActive="activebutton"
+            ariaCurrentWhenActive="page">
+            Gestion
+        </a>
+    </nav>
+    <nav id="top-navbar" class="navbar" *ngIf="user.isProf">
+        
+        <a routerLink="/prof-view/calendar-view" 
+            routerLinkActive="activebutton"
+            ariaCurrentWhenActive="page">
+            Plannings
+        </a>
+        <a routerLink="/prof-view/administratif-view" 
+            routerLinkActive="activebutton"
+            ariaCurrentWhenActive="page">
+            Administratif
+        </a>
+    </nav>
+    <nav id="top-navbar" class="navbar" *ngIf="!user.isProf && !user.isAdmin">
+        
+        <a routerLink="/student-view/calendar-view" 
+            routerLinkActive="activebutton"
+            ariaCurrentWhenActive="page">
+            Plannings
+        </a>
+    </nav>
+
+    <a (click)="logout()" id="disconnect-link" style="float: right;"><img id="disconnect-img" src="../../assets/images/icons/logout_icon.png">Déconnexion</a>
+</div>
+
+

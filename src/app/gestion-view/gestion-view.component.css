@@ -1,0 +1,43 @@
+.left-navbar{
+    float: left;
+    display: block;
+    margin-left: 6%;
+    margin-top: 10%;
+    border-right: grey solid 0.5px;
+}
+
+a{
+    color:black;
+}
+
+
+
+
+
+.container{
+    margin: auto;
+    text-align: center;
+    margin-top: 2%;
+}
+
+#gestion-img{
+    width: 16px;
+    height: 16px;
+    vertical-align: top;
+    margin-right: 2px;
+}
+
+li{
+    padding: 15px;
+}
+
+.container{
+    display:grid;
+}
+
+
+
+
+
+
+

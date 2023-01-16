@@ -1,0 +1,26 @@
+
+<div id="appTitle">
+    <h1>
+        <pre>
+Exam
+Scheduler<i class="appColor" style="font-size: 130%;">■</i>
+        </pre>
+    </h1>
+</div>
+
+
+<div class="visual-box">
+    <form [formGroup]="loginForm" id="loginForm">
+        <h3>Se connecter à ExamScheduler</h3>
+        <input matInput formControlName="username" required="true" placeholder="Nom d'utilisateur">
+        <br>
+        <input matInput formControlName="password" type="password" required="true" placeholder="Mot de passe">
+        <br>
+        <input type="submit" class="submit-button" (click)="onSubmit()">
+    </form>
+</div>
+
+
+
+
+

@@ -1,0 +1,30 @@
+<nav class="left-navbar">
+    <img id="gestion-img" src="../../assets/images/icons/modifier_icon.png"><b>Gestion</b>
+    <ul>
+        <li>
+            <a routerLink="my-watch" 
+                routerLinkActive="activebutton"
+                ariaCurrentWhenActive="page">
+                Mes surveillances
+            </a>
+        </li>
+        <li>
+            <a routerLink="my-absence" 
+                routerLinkActive="activebutton"
+                ariaCurrentWhenActive="page">
+                Mes indisponibilités
+            </a>
+        </li>
+        <li><a routerLink="absence-adder" 
+                routerLinkActive="activebutton"
+                ariaCurrentWhenActive="page">
+                Saisie indisponibilités
+            </a>
+        </li>
+    </ul>
+    
+</nav>
+<div class="container">
+    <h1>Gestion des indisponibilités</h1>
+    <router-outlet></router-outlet>
+</div>

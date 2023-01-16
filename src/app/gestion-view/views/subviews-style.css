@@ -1,0 +1,17 @@
+.left{
+    float: left;
+    margin-top: 6%;
+}
+
+.left li{
+    margin-bottom:30px;
+}
+
+a{
+    color: black;
+}
+
+.container{
+    width: 80%;
+    display: grid;
+}
