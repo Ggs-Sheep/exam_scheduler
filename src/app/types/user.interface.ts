@@ -4,5 +4,6 @@ export interface UserInterface{
     familyname:string;
     isProf:boolean;
     isAdmin:boolean;
-    email:string;
+    email:string
+    
 }

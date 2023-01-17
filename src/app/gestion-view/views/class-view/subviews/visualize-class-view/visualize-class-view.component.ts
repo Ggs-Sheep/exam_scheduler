@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ClassesClient } from 'src/app/clients/classes.client';
 import { SubjectClient } from 'src/app/clients/subject.client';
 import { ClassInterface } from 'src/app/types/class.interface';
-import { SubjectInterface } from 'src/app/types/subject.interface';
-
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-visualize-class-view',
   templateUrl: './visualize-class-view.component.html',
@@ -14,14 +14,19 @@ export class VisualizeClassViewComponent implements OnInit {
   public data:ClassInterface[]= [];
   public selectedId =-1;
   public pageMode = 0; //0 for visualize, 1 for modify form;
+  public modifyForm!:FormGroup;
+  constructor(private classesClient:ClassesClient,private router:Router) { }
 
-  constructor(private classesClient:ClassesClient,private subjectClient:SubjectClient) { }
-
-  ngOnInit(): void {
-    this.pageMode = 0;
+  async ngOnInit(): Promise<void> {
     this.classesClient.refreshClassesData();
-    this.subjectClient.refreshSubjectsData();
-    this.data = this.classesClient.getAllClassesData()!;
+    this.data = await this.classesClient.getAllClassesData()!;
+    this.modifyForm = new FormGroup({
+      name: new FormControl('',Validators.required),
+      
+    });
+    this.pageMode = 0;
+   
+    
     this.selectedId = this.data[0].id;
   }
 
@@ -29,34 +34,11 @@ export class VisualizeClassViewComponent implements OnInit {
     return this.classesClient.getClassData(id)!;
   }
 
-  public fetchAllRelatedSubjects(id:number):SubjectInterface[]{
-    var output:SubjectInterface[] = []
-    this.getAllSubjects()!.forEach((key:SubjectInterface)=>{
-      key.classesId.forEach((idx:number)=>{
-        if(idx == id){
-          output.push(key);
-        }
-      })
-    });
-    return output!;
-  }
+  
 
-  public getAllSubjects():SubjectInterface[]{
-    var data = this.subjectClient.getAllSubjectsData()!;
-    var output:SubjectInterface[] = [];
-    data.then((d)=>{
-      output=d!;
-    })
-    return output;
-  }
+  
 
-  public findIfSubjectIsRelated(id:number):boolean{
-    var output:boolean = false;
-    this.fetchAllRelatedSubjects(this.selectedId!).forEach((sub:SubjectInterface)=>{
-      if(id==sub.id){output=true;}
-    });
-    return output;
-  }
+ 
 
   public goToModifyForm(){
     this.pageMode = 1;
@@ -68,8 +50,28 @@ export class VisualizeClassViewComponent implements OnInit {
     console.log(this.pageMode);
   }
 
-  public getSubjectDataById(id:number):SubjectInterface{
-    return this.subjectClient.getSubjectData(id)!;
+  public onSubmit(){
+    this.classesClient.modifyClass(
+      this.selectedId!,
+      this.modifyForm.get('name')!.value!
+    )
+    this.goToVisualize();
+    this.router.navigate(["responsable-view/gestion-view/class-view"]).then(()=>
+      this.router.navigate(["responsable-view/gestion-view/class-view/visualize-class"])
+    )
+    
+    
+  }
+
+  public onDelete(){
+    this.classesClient.deleteClass(
+      this.selectedId!
+    )
+    this.selectedId = this.data[0].id;
+    this.router.navigate(["responsable-view/gestion-view/class-view"]).then(()=>
+      this.router.navigate(["responsable-view/gestion-view/class-view/visualize-class"])
+    )
+    
   }
 
   

@@ -9,56 +9,39 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class SubjectClient {
-  /*
-  subjects : SubjectInterface[] = 
-  [
-      {
-          "id":0,
-          "name":"Mathématiques",
-          "classesId":[0]  
-      },
-      {
-          "id":1,
-          "name":"Français Approfondit",
-          "classesId":[1]
-      }
-  ]
-  */
+  
   private data : SubjectInterface[] = [];
 
 
-  constructor(private http: HttpClient,private apiServices:ApiHttpService) {}
+  constructor(private apiServices:ApiHttpService) {}
 
-  private async getObservableData(): Promise<Observable<any>> {
-    var request = this.apiServices.get('/subject',{
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credential':'true',
-      'Access-Control-Allow-Methods':'POST,GET,DELETE,OPTIONS,PUT',
-      'Access-Control-Allow-Headers':'*,Content-Type, Accept, X-Requested-With, remember-me',
-      'Access-Control-Max-Age':'3600',
-      'Accept':'*/*',
-      'User-Agent':'PostmanRuntime/7.28.4'
-    })
-    var toObs = {"user":(await request).data}
-    console.log(toObs);
-    return of(JSON.stringify(toObs)); //debug purposes
+  private async getObservableData(): Promise<Response> {
+    var resp = await this.apiServices.get('/subject/')
+    //var text = await resp.clone().text();
+    //console.log('calling getObservableData() : result : '+text)
+    return resp; //debug purposes
+  }
+
+  public getData():SubjectInterface[]{
+    return this.data;
   }
 
   //This function returns all data stored in observable as an array of SubjectInterfaces
-  public async getAllSubjectsData() : Promise<SubjectInterface[] | null>{
+  public async getAllSubjectsData() : Promise<SubjectInterface[]>{
+    await this.refreshSubjectsData()
     
-    let output:SubjectInterface[] = [];
-    (await this.getObservableData()).subscribe((val:SubjectInterface[])=>{output = val}).unsubscribe();
-    console.log("getting data");
-    return output;
+    return this.data;
     
     
     
   }
 
-  public async refreshSubjectsData(){
+  public async refreshSubjectsData():Promise<void>{
     let output:SubjectInterface[] = [];
-    (await this.getObservableData()).subscribe((val:SubjectInterface[])=>{output = val}).unsubscribe();
+    var resp = await this.getObservableData()!;
+    var text = await resp.text();
+    var decodedData = JSON.parse(text);
+    output = <SubjectInterface[]>decodedData;
     this.data=output;
   }
 
@@ -66,40 +49,41 @@ export class SubjectClient {
 
   //This function returns data from the subject you are asking for (w/ id)
   public getSubjectData(askedId:number) : SubjectInterface | null{
-    let output:SubjectInterface | null= null;
+    let output:SubjectInterface[] = [];
     
-    this.data.forEach((sub) =>{
-      if(sub.id == askedId){
+    this.data.forEach((sub:SubjectInterface) =>{
+      
+      if(sub.id == askedId!){
         
-        output = sub;
+        output.push(sub);
       }
     })
-    return output;
+    return output[0];
     
  
   }
 
-  public createNewSubject(name:string){
+  public async createNewSubject(name:string){
     //requête de création
-    this.apiServices.post('/subject/',{"name":name},{
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers':'*,Content-Type, Accept, X-Requested-With, remember-me',
-      'Accept':'*/*',
-      'User-Agent':'PostmanRuntime/7.28.4',
-      'Authorization':'Bearer '+localStorage.getItem('token'),
-    })
+    var data = await this.apiServices.post('/subject/',{"name":name})
     console.log("tryed creating "+name);
+    console.log(JSON.parse(await data.text()))
+    
   }
 
-  public modifySubject(id:number,name:string){
+  public async modifySubject(id:number,name:string){
     //requête de création
-    this.apiServices.post('/subject/'+id,{"name":name},{
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers':'*,Content-Type, Accept, X-Requested-With, remember-me',
-      'Accept':'*/*',
-      'User-Agent':'PostmanRuntime/7.28.4',
-      'Authorization':'Bearer '+localStorage.getItem('token'),
-    })
+    var data = await this.apiServices.put('/subject/'+id,{"name":name})
     console.log("tryed modifying "+name);
+    console.log(JSON.parse(await data.text()))
+    this.refreshSubjectsData();
+  }
+
+  public async deleteSubject(id:number){
+    //requête de création
+    var data = await this.apiServices.delete('/subject/'+id)
+    console.log("tryed deleting");
+    console.log(JSON.parse(await data.text()))
+    this.refreshSubjectsData();
   }
 }
