@@ -18,6 +18,7 @@ export class AddProfViewComponent implements OnInit {
       password: new FormControl('',Validators.required),
       last_name: new FormControl('',Validators.required),
       first_name: new FormControl('',Validators.required),
+      
     });
   }
 
@@ -30,6 +31,7 @@ export class AddProfViewComponent implements OnInit {
       "last_name":this.addForm!.get('last_name')!.value,
       "teacher":true,
       "admin":false
+      
     }
     this.professorClient.createNewProf(data)
     console.log("created user");

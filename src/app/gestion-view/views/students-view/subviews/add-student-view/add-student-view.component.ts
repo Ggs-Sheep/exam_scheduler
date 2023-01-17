@@ -18,6 +18,7 @@ export class AddStudentViewComponent implements OnInit {
       password: new FormControl('',Validators.required),
       last_name: new FormControl('',Validators.required),
       first_name: new FormControl('',Validators.required),
+      
     });
   }
 
@@ -29,7 +30,8 @@ export class AddStudentViewComponent implements OnInit {
       "first_name":this.addForm!.get('first_name')!.value,
       "last_name":this.addForm!.get('last_name')!.value,
       "teacher":false,
-      "admin":false
+      "admin":false,
+      
     }
     this.studentsClient.createNewStudent(data)
     console.log("created user");

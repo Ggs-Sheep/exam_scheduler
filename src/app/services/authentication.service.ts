@@ -11,13 +11,14 @@ import { ApiHttpService } from '../services/apihttp.service';
 export class AuthenticationService {
   private tokenKey='token';
   private userKey='user';
-  private user:UserInterface = {
+  private user:any = {
     'id':-1,
     'email':'',
     'familyname':'',
     'isAdmin':false,
     'isProf':false,
-    'name':''
+    'name':'',
+    'classroom':1
   }
 
 
@@ -42,6 +43,7 @@ export class AuthenticationService {
     this.user.name = decodedData.user.first_name;
     this.user.isAdmin = decodedData.user.admin;
     this.user.isProf = decodedData.user.teacher;
+    //this.user.classroom = decodedData.user.classroom;
     console.log(this.user);
 
     sessionStorage.setItem(this.userKey,JSON.stringify(this.user));

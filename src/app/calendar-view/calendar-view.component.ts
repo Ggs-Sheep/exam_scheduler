@@ -17,8 +17,11 @@ export class CalendarViewComponent implements OnInit {
     this.sessionClient.refreshSessionsData();
     this.data = await this.sessionClient.getAllSessionsData();
     console.log(this.data)
+
+    this.getUserData();
+    console.log(this.userData)
     /*
-    var user:any = JSON.parse(sessionStorage.getItem('user')!);
+    
 
     var request = await this.sessionClient.getSessionsByUserId(user.id)
     var text = await request.text();
@@ -36,6 +39,23 @@ export class CalendarViewComponent implements OnInit {
     var n = this.timeToDate(str).getUTCMonth();
     var dico = ['JAN','FEV','MAR','AVR','MAI','JUN','JUI','AOU','SEP','OCT','NOV','DEC']
     return dico[n-1]
+  }
+
+  private getUserData(){
+    var user:any = JSON.parse(sessionStorage.getItem('user')!);
+    console.log(user);
+    this.data.forEach((sub:any)=>{
+      if(sub.classroom.id == user.classroom){
+        this.userData.push(sub)
+      }
+    })
+
+  }
+
+  public getDayOfWeek(str:string):string{
+    const weekday = ["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
+    var n = this.timeToDate(str);
+    return weekday[n.getDay()]
   }
 
 }
