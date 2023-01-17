@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {FormGroup,FormControl,Validators} from '@angular/forms';
 //Import interfaces
 import { SubjectInterface } from '../types/subject.interface';
 import { ClassInterface } from '../types/class.interface';
@@ -15,7 +15,7 @@ import { RoomsClient } from '../clients/rooms.client';
   styleUrls: ['./respo-planning-creator.component.css']
 })
 export class RespoPlanningCreatorComponent implements OnInit {
-  nameCtrl: FormControl = new FormControl();
+  public plannerForm!: FormGroup;
   public periodsAmount:number = 0;
  
 
@@ -25,14 +25,17 @@ export class RespoPlanningCreatorComponent implements OnInit {
     private roomsClient:RoomsClient
     
     ) { 
-      this.nameCtrl = new FormControl();
+      
       
     }
 
   ngOnInit(): void {
     
     this.refreshAllData();
-    
+    this.plannerForm = new FormGroup({
+      start_date: new FormControl('',Validators.required),
+      end_date: new FormControl('',Validators.required),
+    });
     
   }
 
@@ -42,18 +45,14 @@ export class RespoPlanningCreatorComponent implements OnInit {
     this.roomsClient.refreshRoomsData();
 
   }
-
+ 
   public getAllClasses():ClassInterface[]{
-    return this.classesClient.getAllClassesData()!;
+    return this.classesClient.getData()!;
   }
 
   public getAllSubjects():SubjectInterface[]{
-    var data = this.subjectClient.getAllSubjectsData()!;
-    var output:SubjectInterface[] = [];
-    data.then((d)=>{
-      output=d!;
-    })
-    return output;
+    var data:SubjectInterface[] = this.subjectClient.getData();
+    return data;
   }
 
   public returnArray(value:number){
@@ -69,10 +68,14 @@ export class RespoPlanningCreatorComponent implements OnInit {
     //console.log(this.periodsAmount)
   }
  
-  
+
   public getAvailableRooms():RoomInterface[]{
-    return this.roomsClient.getAvailableRooms();
+    return this.roomsClient.getData();
   }
  
+  public sendPlannerInfo(){
+    //On va ajouter les champs manquants au formGroup (les champs créés dynamiquement)
+    
+  }
 
 }

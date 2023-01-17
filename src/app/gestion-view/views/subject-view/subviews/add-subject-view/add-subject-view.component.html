@@ -1,5 +1,5 @@
 <h2>Ajouter une matière</h2>
 <form [formGroup]="addForm" id="addForm">
-    <input matInput formControlName="name" type="text" placeholder="Nom de la matière">
+    Nom : <input required="true" matInput formControlName="name" type="text" placeholder="Nom de la matière">
     <input class="submit-button" type="submit" value="Ajouter" (click)="onSubmit()">
 </form>

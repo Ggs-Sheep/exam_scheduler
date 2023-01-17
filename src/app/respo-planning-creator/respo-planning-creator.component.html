@@ -74,16 +74,18 @@
                 <tr>
                     <th>Nom</th>
                     <th>Capacité</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let r of getAvailableRooms()">
                     <td>{{r.name}}</td>
                     <td>{{r.capacity}}</td>
+                    <td><input (value)="r.id" type="checkbox"></td>
                 </tr>
             </tbody>
         </table>
-        <input class="submit-button" type="submit" value="Créer le planning">
+        <input class="submit-button" type="submit" value="Créer le planning" (click)="sendPlannerInfo()">
     </form>
 </div>
     

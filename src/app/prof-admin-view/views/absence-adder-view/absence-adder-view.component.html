@@ -1,10 +1,10 @@
 <div class="visual-box">
     <h2>Saisie des indisponibilités</h2>
-    <form>
+    <form [formGroup]="addForm" id="addForm">
         Date de début :
-        <input type="date" required><br>
+        <input type="date"  matInput formControlName="start_date"><br>
         Date de fin :
-        <input type="date" required><br>
-        <input class="submit-button" type="submit">
+        <input type="date"  matInput formControlName="end_date"><br>
+        <input class="submit-button" type="submit" value="Ajouter" (click)="onSubmit()">
     </form>
 </div>

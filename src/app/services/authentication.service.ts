@@ -31,7 +31,7 @@ export class AuthenticationService {
     var data = await this.apiServices.postNoHeader('/authenticate',{'email':username,'password':password});
     var text = await data.text();
     var decodedData = JSON.parse(text);
-    console.log(text);
+    
     sessionStorage.setItem(this.tokenKey,decodedData.token);
     
     //logique de redirection
@@ -42,6 +42,7 @@ export class AuthenticationService {
     this.user.name = decodedData.user.first_name;
     this.user.isAdmin = decodedData.user.admin;
     this.user.isProf = decodedData.user.teacher;
+    console.log(this.user);
 
     sessionStorage.setItem(this.userKey,JSON.stringify(this.user));
     console.log('pitié');
@@ -65,7 +66,8 @@ export class AuthenticationService {
   
 
   public logout(){
-    sessionStorage.clear();
+    sessionStorage.removeItem(this.tokenKey);
+    sessionStorage.removeItem(this.userKey);
     console.log('Logged out.')
     this.router.navigate(['/login']);
   }

@@ -1,6 +1,8 @@
 export interface ProfessorInterface{
     id:number;
-    familyname:string;
-    name:string;
-    indispoIds:number[];
+    last_name:string;
+    first_name:string;
+    email:string;
+    admin:boolean,
+    teacher:boolean
 }

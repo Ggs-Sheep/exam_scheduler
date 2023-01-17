@@ -1,32 +1,47 @@
 <h2>Visualiser un enseignant</h2>
-<div *ngIf="pageMode==0">
+<div *ngIf="pageMode==0 && data.length>0">
     Sélectionnez un enseignant existant : 
     <select [(ngModel)] = "selectedId">
-        <option *ngFor="let p of data" [ngValue]="p.id">{{p.name}}</option>
+        <option *ngFor="let p of data" [ngValue]="p.id" >{{p.last_name}} {{p.first_name}}</option>
     </select>
     <h3>Informations</h3>
     <ul>
         <li>id : {{getDataById(selectedId!)!.id}}</li>
-        <li>Nom : {{getDataById(selectedId!)!.familyname}}</li>
-        <li>Prénom : {{getDataById(selectedId!)!.name}}</li>     
+        <li>Nom : {{getDataById(selectedId!)!.last_name}}</li>
+        <li>Prénom : {{getDataById(selectedId!)!.first_name}}</li>
+        <li>Email : {{getDataById(selectedId!)!.email}}</li>     
     </ul>
     <h3>Indisponibilités</h3>
     <ul>
-        <!--<li *ngFor="let k of data">Du {{p.start}} au {{p.end}}</li>-->
-    
+        <li *ngFor="let u of getUserUnavailableData(selectedId!)">
+            <table>
+                <thead>
+                    <th>Début</th>
+                    <th>Fin</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{dateFormat(accessTimeslot(u.unavailability)!.start_date!)}}</td>
+                        <td>{{dateFormat(accessTimeslot(u.unavailability)!.end_date!)}}</td> 
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+        </li>
     </ul>
     <h3>Actions</h3>
-    <button class="suppr-button">Supprimer</button>
+    <button class="suppr-button" (click)="onDelete();">Supprimer</button>
     <button (click)="goToModifyForm();">Modifier</button>
 </div>
 <div *ngIf="pageMode==1">
-    <form>
-        Vous modifiez l'enseignant suivant :  {{getDataById(selectedId!)!.familyname}} {{getDataById(selectedId!)!.name}}
+    <form [formGroup]="modifyForm" id="modifyForm">
+        Vous modifiez l'enseignant suivant :  {{getDataById(selectedId!)!.last_name}} {{getDataById(selectedId!)!.first_name}}
         <h3>Informations</h3>
-        Nom : <input placeholder="Nom" value={{getDataById(selectedId!)!.familyname}}><br>
-        Prénom : <input placeholder="Nom" value={{getDataById(selectedId!)!.name}}><br>
-
+        Email : <input required="true" matInput formControlName="email"  placeholder="Email" value={{getDataById(selectedId!)!.email}}><br>
+        Nom : <input required="true" matInput formControlName="last_name" placeholder="Nom" value={{getDataById(selectedId!)!.last_name}}><br>
+        Prénom : <input required="true" matInput formControlName="first_name" placeholder="Nom" value={{getDataById(selectedId!)!.first_name}}><br>
+        Mot de passe : <input required="true" matInput formControlName="password" placeholder="Mot de passe" value="password" type="password"><br>
         <button class="suppr-button" (click)="goToVisualize();">Retour</button>
-        <input class="submit-button" type="submit" value="Sauvegarder">
+        <input class="submit-button" type="submit" value="Sauvegarder" (click)="onSubmit()">
     </form>
 </div>

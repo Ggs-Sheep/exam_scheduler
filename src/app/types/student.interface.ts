@@ -1,6 +1,8 @@
 export interface StudentInterface{
     id:number;
-    familyname:string;
-    name:string;
-    classId:number;
+    last_name:string;
+    first_name:string;
+    email:string,
+    teacher:boolean,
+    admin:boolean
 }

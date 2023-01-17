@@ -2,69 +2,83 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ProfessorInterface } from '../types/professor.interface';
 import { of,Observable } from 'rxjs';
+import { ApiHttpService } from '../services/apihttp.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfessorsClient {
 
-  subjects : ProfessorInterface[] = 
-  [
-      {
-          "id":0,
-          "familyname":"Lafraise",
-          "name":"Adrien",
-          "indispoIds":[]
-      },
-      {
-          "id":1,
-          "familyname":"Montabert",
-          "name":"Anne",
-          "indispoIds":[]
-      }
-  ]
-
   private data : ProfessorInterface[] = [];
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private apiServices:ApiHttpService) {}
 
-  private getObservableData(): Observable<any> {
-    //Pas oublier de subscribe au retour car de type observable
-    //return this.http.get(environment.apiUrl + '/SubjectData');
-    return of(this.subjects); //debug purposes
+  private async getObservableData(): Promise<Response> {
+    var resp = await this.apiServices.get('/user/teacher')
+    var text = await resp.clone().text();
+    console.log('calling getObservableData() : result : '+text)
+    return resp; //debug purposes
   }
 
   //This function returns all data stored in observable as an array of SubjectInterfaces
-  public getAllProfsData() : ProfessorInterface[] | null{
-    /*
-    let output:SubjectInterface[] = [];
-    this.getObservableData().subscribe((val:SubjectInterface[])=>{output = val}).unsubscribe();
-    return output;
-    */
-    //console.log("getting data");
+  public async getAllProfsData() : Promise<ProfessorInterface[]>{
+    await this.refreshProfsData()
+    
     return this.data;
+    
+    
+    
   }
 
-  public refreshProfsData(){
+  public async refreshProfsData():Promise<void>{
     let output:ProfessorInterface[] = [];
-    this.getObservableData().subscribe((val:ProfessorInterface[])=>{output = val}).unsubscribe();
+    var resp = await this.getObservableData()!;
+    var text = await resp.text();
+    var decodedData = JSON.parse(text);
+    output = <ProfessorInterface[]>decodedData;
     this.data=output;
   }
 
  
 
   //This function returns data from the subject you are asking for (w/ id)
-  getProfData(askedId:number) : ProfessorInterface | null{
-    let output:ProfessorInterface | null= null;
+  public getProfData(askedId:number) : ProfessorInterface | null{
+    let output:ProfessorInterface[] = [];
     
-    this.data.forEach((sub) =>{
-      if(sub.id == askedId){
-        output = sub;
+    this.data.forEach((sub:ProfessorInterface) =>{
+      
+      if(sub.id == askedId!){
+        
+        output.push(sub);
       }
     })
-    return output;
+    return output[0];
     
  
+  }
+
+  public async createNewProf(data: any){
+    //utilise la requête register.
+    var resp = await this.apiServices.post('/register',data)
+    console.log("tryed creating "+data.name);
+    console.log(JSON.parse(await resp.text()))
+    
+  }
+
+  public async modifyProf(id:number,data:any){
+    //requête de création
+    var resp = await this.apiServices.put('/user/'+id,data)
+    console.log("tryed modifying "+data.last_name + " "+data.first_name);
+    console.log(JSON.parse(await resp.text()))
+    this.refreshProfsData();
+  }
+
+  public async deleteProf(id:number){
+    //requête de création
+    var data = await this.apiServices.delete('/user/'+id)
+    console.log("tryed deleting");
+    console.log(JSON.parse(await data.text()))
+    this.refreshProfsData();
   }
 }

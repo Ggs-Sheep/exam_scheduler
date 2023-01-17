@@ -1,8 +1,8 @@
 <h2>Visualiser une spécialité</h2>
-<div *ngIf="pageMode==0">
+<div *ngIf="pageMode==0 && data.length>0">
     Sélectionnez une spécialité existante : 
     <select [(ngModel)] = "selectedId">
-        <option *ngFor="let c of data" [ngValue]="c.id">{{c.name}}</option>
+        <option *ngFor="let c of data" [ngValue]="c.id">{{getDataById(c.id!)!.name}}</option>
     </select>
     <h3>Informations</h3>
     <ul>
@@ -10,27 +10,16 @@
         <li>Nom : {{getDataById(selectedId!)!.name}}</li>
         
     </ul>
-    <h3>Matières concernées :</h3>
-    <ul>
-        <li *ngFor="let s of fetchAllRelatedSubjects(selectedId!)">{{s.name}}</li>
-    </ul>
     <h3>Actions</h3>
-    <button class="suppr-button">Supprimer</button>
+    <button class="suppr-button" (click)="onDelete();">Supprimer</button>
     <button (click)="goToModifyForm();">Modifier</button>
 </div>
 <div *ngIf="pageMode==1">
-    <form>
+    <form [formGroup]="modifyForm" id="modifyForm">
         Vous modifiez la spécialité suivante : {{getDataById(selectedId!)!.name}}
         <h3>Informations</h3>
-        <input placeholder="Nom" value={{getDataById(selectedId!)!.name}}>
-        <h3>Matières concernées :</h3>
-        <ul>
-            <li *ngFor="let s of getAllSubjects()">
-                {{s.name}}
-                <input type="checkbox" [checked]="findIfSubjectIsRelated(s.id)" [name]="s.id">
-            </li>
-        </ul>
+        Nom : <input required="true" matInput formControlName="name" placeholder="Nom" value={{getDataById(selectedId).name}}><br>
         <button class="suppr-button" (click)="goToVisualize();">Retour</button>
-        <input class="submit-button" type="submit" value="Sauvegarder">
+        <input class="submit-button" type="submit" value="Sauvegarder" (click)="onSubmit()">
     </form>
 </div>

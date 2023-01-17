@@ -11,7 +11,7 @@ export class ApiHttpService {
     private _http:HttpClient
     ) { } 
     public async get(url: string):Promise<Response> { 
-        console.log('Trying to get');
+        //console.log('Trying to get');
         const options = {
             method: 'GET',
             headers: 
@@ -20,7 +20,7 @@ export class ApiHttpService {
             },
             
         };
-        var resp = await fetch('http://examschedulerapi-env.eba-4uj6tzx8.eu-west-1.elasticbeanstalk.com'+url,options)
+        var resp = await fetch('http://examschedulerapi-env.eba-4uj6tzx8.eu-west-1.elasticbeanstalk.com'+url!,options)
         return resp; 
     } 
     public async post(url: string, data: any):Promise<Response> { 
@@ -57,6 +57,37 @@ export class ApiHttpService {
         
         //console.log(resp);
         return resp;
+    } 
+
+    public async put(url: string, data: any):Promise<Response> { 
+        console.log('Trying to put');
+        const options = {
+            method: 'PUT',
+            headers: 
+            {
+                'Authorization':'Bearer '+sessionStorage.getItem('token'),
+                'content-type': 'application/json' ,
+            },
+            body: JSON.stringify(data)
+        };
+        var resp = await fetch('http://examschedulerapi-env.eba-4uj6tzx8.eu-west-1.elasticbeanstalk.com'+url,options)
+        
+        //console.log((await resp).data);
+        return resp;
+    } 
+
+    public async delete(url: string):Promise<Response> { 
+        //console.log('Trying to get');
+        const options = {
+            method: 'DELETE',
+            headers: 
+            {   'Authorization':'Bearer '+sessionStorage.getItem('token'),
+                'content-type': 'application/json' ,
+            },
+            
+        };
+        var resp = await fetch('http://examschedulerapi-env.eba-4uj6tzx8.eu-west-1.elasticbeanstalk.com'+url,options)
+        return resp; 
     } 
 
     

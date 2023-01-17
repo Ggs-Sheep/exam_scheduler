@@ -1,9 +1,8 @@
 <h2>Ajouter une salle</h2>
-<form>
+<form [formGroup]="addForm" id="addForm">
     
-    Nom : <input type="text" placeholder="Nom de la salle"><br>
-    Capacité : <input type="text" placeholder="Capacité"><br>
-    Indisponible ? <input type="checkbox"><br>
+    Nom : <input required="true" matInput formControlName="name" type="text" placeholder="Nom de la salle"><br>
+    Capacité : <input required="true" matInput formControlName="capacity" type="text" placeholder="Capacité"><br>
     
-    <input class="submit-button" type="submit" value="Ajouter">
+    <input class="submit-button" type="submit" value="Ajouter" (click)="onSubmit()">
 </form>

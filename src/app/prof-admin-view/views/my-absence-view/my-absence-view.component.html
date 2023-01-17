@@ -1,7 +1,22 @@
-<div class="visual-box">
+<div class="visual-box" *ngIf="data.length>0">
     <h2>Récapitulatif des indisponibilités</h2>
     <ul>
-        <li>21/01/2023 au 27/01/2023 <button class="suppr-button">Supprimer</button></li>
-        <li>01/05/2023 au 15/05/2023 <button class="suppr-button">Supprimer</button></li>
+        <li *ngFor="let u of data">
+            <table>
+                <thead>
+                    <th>Début</th>
+                    <th>Fin</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{dateFormat(accessTimeslot(u.id)!.start_date)}}</td>
+                        <td>{{dateFormat(accessTimeslot(u.id)!.end_date)}}</td>
+                        <td><button class="suppr-button" (click)="onDelete($event)" value={{u.id}}>Supprimer</button>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+        </li>
     </ul>
 </div>
