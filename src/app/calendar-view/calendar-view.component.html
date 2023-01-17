@@ -7,8 +7,8 @@
 <body>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 	
-	<div class="container">
-		<div class="row row-striped">
+	<div class="container" *ngIf="data.length>0">
+		<div class="row row-striped" *ngFor="let s of data">
 			<div class="col-2 text-right">
 				<h1 class="display-4"><span class="badge badge-secondary">23</span></h1>
 				<h2>JAN</h2>
@@ -18,20 +18,6 @@
 				<ul class="list-inline">
 				    <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Lundi</li>
 					<li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 13:30 - 15:30</li>
-					<li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Cauchy</li>
-				</ul>
-			</div>
-		</div>
-		<div class="row row-striped">
-			<div class="col-2 text-right">
-				<h1 class="display-4"><span class="badge badge-secondary">24</span></h1>
-				<h2>JAN</h2>
-			</div>
-			<div class="col-10">
-				<h3 class="text-uppercase"><strong>Mathématiques</strong></h3>
-				<ul class="list-inline">
-				    <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Mardi</li>
-					<li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 10:30 - 13:00</li>
 					<li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Cauchy</li>
 				</ul>
 			</div>
