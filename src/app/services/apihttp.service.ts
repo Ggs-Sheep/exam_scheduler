@@ -20,7 +20,7 @@ export class ApiHttpService {
             },
             
         };
-        var resp = await fetch('http://examschedulerapi-env.eba-4uj6tzx8.eu-west-1.elasticbeanstalk.com'+url!,options)
+        var resp = await fetch('localhost:8080'+url!,options)
         return resp; 
     } 
     public async post(url: string, data: any):Promise<Response> { 
@@ -34,7 +34,7 @@ export class ApiHttpService {
             },
             body: JSON.stringify(data)
         };
-        var resp = await fetch('http://examschedulerapi-env.eba-4uj6tzx8.eu-west-1.elasticbeanstalk.com'+url,options)
+        var resp = await fetch('localhost:8080'+url,options)
         
         //console.log((await resp).data);
         return resp;
@@ -53,7 +53,7 @@ export class ApiHttpService {
         //var resp = axios(options);
         //var resp:Observable<any> = of('');
         
-        var resp = await fetch('http://examschedulerapi-env.eba-4uj6tzx8.eu-west-1.elasticbeanstalk.com'+url,options)
+        var resp = await fetch('localhost:8080'+url,options)
         
         //console.log(resp);
         return resp;
@@ -70,7 +70,7 @@ export class ApiHttpService {
             },
             body: JSON.stringify(data)
         };
-        var resp = await fetch('http://examschedulerapi-env.eba-4uj6tzx8.eu-west-1.elasticbeanstalk.com'+url,options)
+        var resp = await fetch('localhost:8080'+url,options)
         
         //console.log((await resp).data);
         return resp;
@@ -86,7 +86,7 @@ export class ApiHttpService {
             },
             
         };
-        var resp = await fetch('http://examschedulerapi-env.eba-4uj6tzx8.eu-west-1.elasticbeanstalk.com'+url,options)
+        var resp = await fetch('localhost:8080'+url,options)
         return resp; 
     } 
 
